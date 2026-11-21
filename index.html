@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#1d1d1f">
+    <meta name="description" content="Олександр, Київ. Особиста візитка: практика водіння, міські маршрути та повернення за кермо після перерви.">
+    <title>Олександр — практика водіння у Києві</title>
+    <link rel="icon" type="image/svg+xml" href="./assets/mark.svg">
+    <link rel="stylesheet" href="./styles.css">
+    <script defer src="./config.js"></script>
+    <script defer src="./app.js"></script>
+  </head>
+  <body id="top">
+    <a class="skip" href="#main">До основного вмісту</a>
+    <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"></path><circle cx="12" cy="10" r="2.2"></circle></symbol>
+      <symbol id="i-plane" viewBox="0 0 24 24"><path d="m3 10 18-7-5.5 18-4-7-8.5-4ZM11.5 14 21 3"></path></symbol>
+      <symbol id="i-message" viewBox="0 0 24 24"><path d="M20.5 11.5a8.5 8.5 0 0 1-12.1 7.7L3 21l1.6-5.1a8.5 8.5 0 1 1 15.9-4.4Z"></path><path d="M8.6 8.2c.4 3.6 3.6 6.8 7.1 7.1"></path></symbol>
+      <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v15m-6-6 6 6 6-6"></path></symbol>
+      <symbol id="i-diagonal" viewBox="0 0 24 24"><path d="M5 5l13 13m0-10v10H8"></path></symbol>
+    </svg>
+
+    <header class="site-header">
+      <div class="wrap nav-line">
+        <a class="wordmark" href="#top" aria-label="Практика водіння — на початок">
+          <img src="./assets/mark.svg" width="34" height="34" alt="">
+          <span>Практика водіння</span>
+        </a>
+        <nav class="main-nav" aria-label="Розділи сторінки">
+          <a href="#practice">Практика</a>
+          <a href="#format">Формат</a>
+          <a class="nav-contact" href="#contact">Зв’язок <svg class="icon" aria-hidden="true"><use href="#i-diagonal"></use></svg></a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-labelledby="name">
+        <div class="wrap">
+          <div class="hero-layout">
+            <div class="hero-copy">
+              <p class="place"><svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg> Київ, Україна</p>
+              <h1 id="name">Олександр<span class="name-dot" aria-hidden="true">.</span></h1>
+              <p class="hero-role">Практика водіння у Києві</p>
+              <p class="hero-intro">Допоможу спокійно повернутися за кермо: від паркування біля дому до звичного маршруту містом.</p>
+              <div class="contact-set" data-contact-set>
+                <p id="hero-note" class="contact-note" data-contact-note>Запис поки недоступний. Контакти ще не додано.</p>
+                <div class="actions">
+                  <button type="button" class="action primary" data-channel="telegram" aria-describedby="hero-note" disabled><svg class="icon" aria-hidden="true"><use href="#i-plane"></use></svg>Telegram</button>
+                  <button type="button" class="action secondary" data-channel="whatsapp" aria-describedby="hero-note" disabled><svg class="icon" aria-hidden="true"><use href="#i-message"></use></svg>WhatsApp</button>
+                </div>
+              </div>
+              <a class="explore-link" href="#practice"><svg class="icon" aria-hidden="true"><use href="#i-down"></use></svg> До тем практики</a>
+            </div>
+            <figure class="hero-art">
+              <img src="./assets/drive.svg" width="600" height="450" alt="Двоколірна ілюстрація водія поруч із припаркованим авто.">
+              <figcaption><span>Рис. 01</span> Перед виїздом</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="practice" class="band practice" aria-labelledby="practice-title">
+        <div class="wrap split-section">
+          <div class="section-title">
+            <p class="kicker"><span>01</span> Практика</p>
+            <h2 id="practice-title">З чим можу допомогти</h2>
+          </div>
+          <div class="topics">
+            <details class="topic" name="practice" open>
+              <summary>
+                <span class="topic-number" aria-hidden="true">01</span>
+                <span class="topic-title">Уже маю посвідчення</span>
+                <span class="topic-toggle" aria-hidden="true"></span>
+              </summary>
+              <div class="topic-body"><p>Якщо давно не водили або є складна ділянка дороги, почнемо саме з неї. Можемо окремо відпрацювати паркування, зміну смуги чи виїзд на жваве перехрестя.</p></div>
+            </details>
+            <div data-family-slot></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="format" class="section" aria-labelledby="format-title">
+        <div class="wrap">
+          <div class="section-title">
+            <p class="kicker"><span>02</span> Формат</p>
+            <h2 id="format-title">Як проходить заняття</h2>
+          </div>
+          <ol class="steps">
+            <li><h3>Обираємо задачу</h3><p>Напишіть, де за кермом почуваєтеся невпевнено. Наприклад, на заїзді у двір чи на перехресті дорогою до роботи.</p></li>
+            <li><h3>Плануємо маршрут</h3><p>Обговоримо район Києва й точку зустрічі. Якщо у вас є посвідчення, окремо узгодимо авто та коробку передач.</p></li>
+            <li><h3>Узгоджуємо час</h3><p>Я відповім у месенджері. Зустріч відбудеться лише тоді, коли ми обоє підтвердимо день і час.</p></li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="contact" class="band contact-section" aria-labelledby="contact-title">
+        <div class="wrap contact-layout">
+          <div class="section-title">
+            <p class="kicker"><span>03</span> Зв’язок</p>
+            <h2 id="contact-title">Час зустрічі</h2>
+            <p id="contact-intro" class="contact-intro">День і час я підтверджую особисто в переписці. Автоматичного запису немає.</p>
+          </div>
+          <div class="contact-set" data-contact-set>
+            <p id="contact-note" class="contact-note" data-contact-note>Запис поки недоступний. Контакти ще не додано.</p>
+            <div class="actions">
+              <button type="button" class="action primary" data-channel="telegram" aria-describedby="contact-note" disabled><svg class="icon" aria-hidden="true"><use href="#i-plane"></use></svg>Telegram</button>
+              <button type="button" class="action secondary" data-channel="whatsapp" aria-describedby="contact-note" disabled><svg class="icon" aria-hidden="true"><use href="#i-message"></use></svg>WhatsApp</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="wrap footer">
+      <span>Олександр <span class="footer-separator" aria-hidden="true">/</span> Київ</span>
+      <a href="#top">До початку <svg class="icon" aria-hidden="true"><use href="#i-down"></use></svg></a>
+    </footer>
+  </body>
+</html>
