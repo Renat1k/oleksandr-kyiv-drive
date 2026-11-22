@@ -54,6 +54,31 @@
         }
       }
     }
+
+    if (settings.driver && typeof settings.driver === "object") {
+      /** @type {Record<string, unknown>} */
+      const driver = settings.driver;
+      for (const el of document.querySelectorAll("[data-driver-field]")) {
+        const key = el.getAttribute("data-driver-field");
+        if (!key) continue;
+        const value = driver[key];
+        if (typeof value === "string" && value.trim()) {
+          el.textContent = value.trim();
+          el.classList.remove("is-placeholder");
+        }
+      }
+
+      const photoSlot = document.querySelector("[data-driver-photo]");
+      if (photoSlot instanceof HTMLElement && typeof driver.photo === "string" && driver.photo.trim()) {
+        const img = document.createElement("img");
+        img.src = driver.photo.trim();
+        img.alt = "Олександр — автоінструктор у Києві";
+        img.className = "driver-photo-img";
+        photoSlot.innerHTML = "";
+        photoSlot.classList.add("has-photo");
+        photoSlot.appendChild(img);
+      }
+    }
   }
 
   const menuToggle = document.querySelector("[data-menu-toggle]");

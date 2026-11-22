@@ -516,6 +516,67 @@ code {
   text-align: center;
   padding: 28px;
   gap: 12px;
+  overflow: hidden;
+}
+.photo-slot.has-photo {
+  padding: 0;
+  border-style: solid;
+  border-color: var(--rule);
+}
+.driver-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.driver-placeholder-box {
+  margin-top: 16px;
+  padding: 22px 24px;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px dashed var(--rule-strong);
+}
+.driver-placeholder-box p {
+  color: var(--soft);
+  font-size: 0.96875rem;
+  line-height: 1.55;
+}
+.driver-placeholder-box p:not(.is-placeholder) {
+  color: var(--body);
+}
+.fact-value.is-placeholder {
+  color: var(--soft);
+  font-weight: 400;
+}
+.car-intro-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 28px;
+  align-items: start;
+  margin-bottom: 32px;
+}
+.car-highlights {
+  display: grid;
+  gap: 12px;
+  padding: 24px;
+  border-radius: var(--radius-md);
+  background: var(--card);
+  border: 1px solid var(--rule);
+}
+.car-highlights li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--body);
+  font-size: 0.9375rem;
+}
+.car-highlights .icon {
+  margin-top: 2px;
+  width: 17px;
+  height: 17px;
+  color: var(--link);
+}
+.car-specs-wrap {
+  margin-bottom: 32px;
 }
 .photo-slot .icon-badge {
   width: 54px;
@@ -884,7 +945,8 @@ code {
   .steps-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .card-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .car-teaser { grid-template-columns: 1fr; padding: 28px; }
-  .instructor-split { grid-template-columns: 1fr; gap: 28px; }
+  .instructor-split,
+  .car-intro-grid { grid-template-columns: 1fr; gap: 28px; }
   .photo-slot { aspect-ratio: 16 / 10; }
 }
 

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#1d1d1f">
+    <meta name="description" content="Про водія-інструктора Олександра та навчальний автомобіль Škoda Octavia A5 1.6 TDI GreenLine (механіка) з інтерактивним 3D-оглядом.">
+    <title>Про водія — Олександр, практика водіння у Києві</title>
+    <link rel="icon" type="image/svg+xml" href="./assets/mark.svg">
+    <link rel="stylesheet" href="./styles.css">
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script defer src="./config.js"></script>
+    <script defer src="./app.js"></script>
+    <script defer src="./car-viewer.js"></script>
+  </head>
+  <body id="top">
+    <a class="skip" href="#main">До основного вмісту</a>
+    <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <symbol id="i-plane" viewBox="0 0 24 24"><path d="m3 10 18-7-5.5 18-4-7-8.5-4ZM11.5 14 21 3"></path></symbol>
+      <symbol id="i-message" viewBox="0 0 24 24"><path d="M20.5 11.5a8.5 8.5 0 0 1-12.1 7.7L3 21l1.6-5.1a8.5 8.5 0 1 1 15.9-4.4Z"></path><path d="M8.6 8.2c.4 3.6 3.6 6.8 7.1 7.1"></path></symbol>
+      <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v15m-6-6 6 6 6-6"></path></symbol>
+      <symbol id="i-diagonal" viewBox="0 0 24 24"><path d="M5 5l13 13m0-10v10H8"></path></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"></path></symbol>
+      <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"></circle><path d="M5 20a7 7 0 0 1 14 0"></path></symbol>
+      <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h2.1l1.4-2h4l1.4 2h2.1A2.5 2.5 0 0 1 20 8.5v9A2.5 2.5 0 0 1 17.5 20h-11A2.5 2.5 0 0 1 4 17.5v-9Z"></path><circle cx="12" cy="13" r="3.2"></circle></symbol>
+      <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 14.5 6.8 9a2 2 0 0 1 1.9-1.4h6.6a2 2 0 0 1 1.9 1.4l1.8 5.5v4a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H8v1a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-4Z"></path><circle cx="7.8" cy="14.5" r="1"></circle><circle cx="16.2" cy="14.5" r="1"></circle></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"></path></symbol>
+      <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V5m-5 5 5-5 5 5M4 19h16"></path></symbol>
+      <symbol id="i-rotate" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.6"></path><path d="M20 4v5h-5"></path></symbol>
+      <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.3-5.6"></path><path d="M4 4v5h5"></path></symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H6l-3 2 1.2-3.6A8 8 0 1 1 21 12Z"></path></symbol>
+    </svg>
+
+    <header class="site-header">
+      <div class="wrap nav-line">
+        <a class="wordmark" href="./index.html" aria-label="Олександр — на головну">
+          <img src="./assets/mark.svg" width="34" height="34" alt="">
+          <span class="wordmark-text">
+            <span class="wordmark-name">Олександр</span>
+            <span class="wordmark-sub">Автоінструктор · Київ</span>
+          </span>
+        </a>
+        <button type="button" class="menu-toggle" data-menu-toggle aria-expanded="false" aria-controls="site-nav" aria-label="Відкрити меню">
+          <svg class="icon" aria-hidden="true"><use href="#i-menu"></use></svg>
+        </button>
+        <nav id="site-nav" class="main-nav" aria-label="Основна навігація">
+          <a href="./index.html">Головна</a>
+          <a href="./info.html">Про заняття</a>
+          <a href="./driver.html" aria-current="page">Про водія</a>
+          <a class="nav-contact" href="#contact">Зв’язок <svg class="icon" aria-hidden="true"><use href="#i-diagonal"></use></svg></a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero" aria-labelledby="driver-page-title">
+        <div class="wrap">
+          <p class="eyebrow"><svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg> Про водія</p>
+          <h1 id="driver-page-title">Олександр та навчальне авто</h1>
+          <p class="lead">Знайомство з інструктором і короткий огляд автомобіля Škoda Octavia A5 GreenLine, на якому проходять заняття.</p>
+        </div>
+      </section>
+
+      <section id="driver" class="section" aria-labelledby="driver-title">
+        <div class="wrap instructor-split">
+          <div class="photo-slot" data-driver-photo>
+            <span class="icon-badge" aria-hidden="true"><svg class="icon"><use href="#i-camera"></use></svg></span>
+            <strong>Фото Олександра</strong>
+            <span>Додамо сюди справжнє фото, щойно воно буде готове.</span>
+          </div>
+
+          <div>
+            <p class="eyebrow"><svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg> Водій</p>
+            <h2 id="driver-title" data-driver-field="headline">Олександр</h2>
+
+            <div class="driver-placeholder-box">
+              <p class="is-placeholder" data-driver-field="bio">Інформацію про водія додамо найближчим часом після узгодження з Олександром — тут буде коротка розповідь про досвід, стиль навчання та підхід до практики.</p>
+            </div>
+
+            <div class="fact-list">
+              <div class="fact-item">
+                <span class="fact-label">Місто</span>
+                <span class="fact-value">Київ</span>
+              </div>
+              <div class="fact-item">
+                <span class="fact-label">Досвід</span>
+                <span class="fact-value is-placeholder" data-driver-field="experience">Додамо пізніше</span>
+              </div>
+              <div class="fact-item">
+                <span class="fact-label">Райони занять</span>
+                <span class="fact-value is-placeholder" data-driver-field="districts">Додамо пізніше</span>
+              </div>
+              <div class="fact-item">
+                <span class="fact-label">Мови спілкування</span>
+                <span class="fact-value is-placeholder" data-driver-field="languages">Додамо пізніше</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="car" class="band" aria-labelledby="car-title">
+        <div class="wrap">
+          <div class="car-intro-grid">
+            <div>
+              <p class="eyebrow"><svg class="icon" aria-hidden="true"><use href="#i-car"></use></svg> Автомобіль</p>
+              <h2 id="car-title">Škoda Octavia A5 1.6 TDI GreenLine</h2>
+              <p class="lead space-top-sm">Надійний, спокійний і дуже передбачуваний автомобіль для практики на механіці. Дизельний двигун 1.6 TDI має хорошу тягу вже з низьких обертів (250 Н·м від 1500 об/хв), тому машина плавно рушає з місця без різких ривків — це сильно спрощує роботу зі зчепленням у київських заторах і на підйомах.</p>
+              <p class="lead space-top-xs">Версія GreenLine вирізняється тихою економною роботою, системою Start-Stop та підказкою перемикання передач на панелі приладів, а просторий салон і чіткі габарити ліфтбека дають комфортну оглядовість під час паркування.</p>
+            </div>
+
+            <ul class="car-highlights">
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg><span><strong>Механічна КПП (5-ст.)</strong> — чітке й легке перемикання передач, зручне для навчання.</span></li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg><span><strong>Еластичний дизель 1.6 TDI</strong> — впевнено тримає рух на малих обертах, легше не заглухнути на старті.</span></li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg><span><strong>Пакет GreenLine</strong> — система Start-Stop, рекуперація енергії та індикатор вибору передачі.</span></li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg><span><strong>Комфортний салон і огляд</strong> — зручна посадка, великі дзеркала й зрозумілі габарити кузова.</span></li>
+            </ul>
+          </div>
+
+          <div class="card-grid card-grid--4 car-specs-wrap">
+            <div class="spec-card">
+              <span class="spec-label">Модель</span>
+              <span class="spec-value" data-car-spec="model">Škoda Octavia A5 GreenLine</span>
+            </div>
+            <div class="spec-card">
+              <span class="spec-label">Двигун</span>
+              <span class="spec-value" data-car-spec="engine">1.6 TDI · 105 к.с. / 250 Н·м</span>
+            </div>
+            <div class="spec-card">
+              <span class="spec-label">Коробка передач</span>
+              <span class="spec-value" data-car-spec="transmission">Механіка (5-ст. МКПП)</span>
+            </div>
+            <div class="spec-card">
+              <span class="spec-label">Особливості GreenLine</span>
+              <span class="spec-value" data-car-spec="economy">Start-Stop · ~3,8–4,0 л/100 км</span>
+            </div>
+          </div>
+
+          <div class="car-stage" data-car-stage>
+            <div class="car-stage-top">
+              <span class="stage-badge" data-car-mode-badge>3D-огляд · Škoda Octavia A5 GreenLine</span>
+              <div class="stage-upload-group" data-car-upload-wrap>
+                <label class="upload-trigger" for="car-glb-input">
+                  <svg class="icon" aria-hidden="true"><use href="#i-upload"></use></svg>
+                  Приміряти .glb модель
+                </label>
+                <input id="car-glb-input" class="sr-file-input" type="file" accept=".glb,.gltf" data-car-file-input>
+                <button type="button" class="tool-btn" data-car-restore-demo hidden>Повернути макет</button>
+              </div>
+            </div>
+
+            <div class="car-viewport" data-car-viewport></div>
+            <p class="car-status" data-car-status hidden></p>
+
+            <div class="car-toolbar">
+              <div class="preset-group" role="group" aria-label="Ракурси камери">
+                <button type="button" class="tool-btn is-active" data-car-preset="hero">3/4</button>
+                <button type="button" class="tool-btn" data-car-preset="front">Спереду</button>
+                <button type="button" class="tool-btn" data-car-preset="side">Збоку</button>
+                <button type="button" class="tool-btn" data-car-preset="rear">Ззаду</button>
+                <button type="button" class="tool-btn" data-car-preset="top">Зверху</button>
+              </div>
+              <div class="tool-group">
+                <button type="button" class="tool-btn" data-car-autorotate aria-pressed="true">
+                  <svg class="icon" aria-hidden="true"><use href="#i-rotate"></use></svg>
+                  Автообертання
+                </button>
+                <button type="button" class="tool-btn" data-car-reset>
+                  <svg class="icon" aria-hidden="true"><use href="#i-reset"></use></svg>
+                  Скинути
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="stage-hint">
+            <span>Потягніть мишкою або пальцем, щоб покрутити Škoda Octavia A5 · Колесо миші змінює масштаб</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section" aria-labelledby="contact-title">
+        <div class="wrap contact-layout">
+          <div>
+            <p class="eyebrow"><svg class="icon" aria-hidden="true"><use href="#i-chat"></use></svg> Зв’язок</p>
+            <h2 id="contact-title">Час зустрічі</h2>
+            <p id="contact-intro" class="contact-intro">День і час я підтверджую особисто в переписці. Напишіть, що хочете відпрацювати, і ми підберемо зручний варіант.</p>
+          </div>
+          <div class="contact-set" data-contact-set>
+            <p id="contact-note" class="contact-note" data-contact-note>Контакти для запису з’являться тут після узгодження з Олександром.</p>
+            <div class="actions">
+              <button type="button" class="action primary" data-channel="telegram" aria-describedby="contact-note" disabled><svg class="icon" aria-hidden="true"><use href="#i-plane"></use></svg>Telegram</button>
+              <button type="button" class="action secondary" data-channel="whatsapp" aria-describedby="contact-note" disabled><svg class="icon" aria-hidden="true"><use href="#i-message"></use></svg>WhatsApp</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <span>Олександр <span class="footer-separator" aria-hidden="true">/</span> Київ</span>
+        <div class="footer-nav">
+          <a href="./index.html">Головна</a>
+          <a href="./info.html">Про заняття</a>
+          <a href="./driver.html">Про водія</a>
+          <a class="footer-top" href="#top">До початку <svg class="icon" aria-hidden="true"><use href="#i-down"></use></svg></a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

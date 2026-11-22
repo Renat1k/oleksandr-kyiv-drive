@@ -598,21 +598,22 @@
    * @param {(msg: string) => void} setStatus
    */
   async function createThreeGlbViewer(mountEl, modelUrl, setStatus) {
-    setStatus("Завантажуємо 3D-модель…");
+    setStatus("Завантажуємо 3D-модель Škoda Octavia A5…");
 
     const base = "https://cdn.jsdelivr.net/npm/three@0.170.0";
     /** @type {(specifier: string) => Promise<any>} */
     const dynImport = /** @type {any} */ (new Function("u", "return import(u)"));
 
-    const THREE = await dynImport(`${base}/build/three.module.js`);
-    const { OrbitControls } = await dynImport(`${base}/examples/jsm/controls/OrbitControls.js`);
-    const { GLTFLoader } = await dynImport(`${base}/examples/jsm/loaders/GLTFLoader.js`);
-    const { RoomEnvironment } = await dynImport(`${base}/examples/jsm/environments/RoomEnvironment.js`);
+    const THREE = await dynImport("three");
+    const { OrbitControls } = await dynImport("three/addons/controls/OrbitControls.js");
+    const { GLTFLoader } = await dynImport("three/addons/loaders/GLTFLoader.js");
+    const { DRACOLoader } = await dynImport("three/addons/loaders/DRACOLoader.js");
+    const { RoomEnvironment } = await dynImport("three/addons/environments/RoomEnvironment.js");
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.15;
+    renderer.toneMappingExposure = 1.25;
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.domElement.className = "car-webgl-canvas";
@@ -623,46 +624,74 @@
     const scene = new THREE.Scene();
     const pmrem = new THREE.PMREMGenerator(renderer);
     scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    scene.environmentIntensity = 0.85;
 
-    const camera = new THREE.PerspectiveCamera(36, 16 / 9, 0.05, 100);
-    camera.position.set(3.8, 1.8, 4.4);
+    const camera = new THREE.PerspectiveCamera(34, 16 / 9, 0.05, 100);
+    camera.position.set(3.5, 1.55, 4.15);
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.06;
-    controls.maxPolarAngle = Math.PI / 2 - 0.04;
-    controls.minDistance = 2.2;
-    controls.maxDistance = 10.5;
+    controls.maxPolarAngle = Math.PI / 2 - 0.03;
+    controls.minDistance = 2.4;
+    controls.maxDistance = 9.5;
     controls.autoRotate = !prefersReducedMotion;
-    controls.autoRotateSpeed = 0.95;
+    controls.autoRotateSpeed = 0.85;
 
-    // Studio lights
-    const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
-    keyLight.position.set(5, 8, 6);
+    // Studio softbox lighting
+    const hemiLight = new THREE.HemisphereLight(0xf2f6ff, 0x26282e, 0.9);
+    scene.add(hemiLight);
+
+    const keyLight = new THREE.DirectionalLight(0xffffff, 2.4);
+    keyLight.position.set(4.5, 7.5, 5.5);
     keyLight.castShadow = true;
     keyLight.shadow.mapSize.set(1024, 1024);
+    keyLight.shadow.camera.near = 1;
+    keyLight.shadow.camera.far = 22;
+    const sc = 3.5;
+    keyLight.shadow.camera.left = -sc;
+    keyLight.shadow.camera.right = sc;
+    keyLight.shadow.camera.top = sc;
+    keyLight.shadow.camera.bottom = -sc;
+    keyLight.shadow.bias = -0.0005;
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0x2997ff, 1.1);
-    rimLight.position.set(-5, 4, -5);
+    const fillLight = new THREE.DirectionalLight(0xe6f0ff, 1.0);
+    fillLight.position.set(-5.0, 3.2, 3.0);
+    scene.add(fillLight);
+
+    const rimLight = new THREE.DirectionalLight(0x4ca8ff, 1.2);
+    rimLight.position.set(-3.5, 3.8, -5.5);
     scene.add(rimLight);
 
-    // Subtle studio turntable floor
-    const floorGeo = new THREE.CircleGeometry(3.2, 64);
-    const floorMat = new THREE.ShadowMaterial({ opacity: 0.35 });
+    // Subtle studio turntable floor + contact shadow receiver
+    const floorGeo = new THREE.CircleGeometry(3.4, 64);
+    const floorMat = new THREE.ShadowMaterial({ opacity: 0.42 });
     const floor = new THREE.Mesh(floorGeo, floorMat);
     floor.rotation.x = -Math.PI / 2;
     floor.receiveShadow = true;
     scene.add(floor);
 
-    const ringGeo = new THREE.RingGeometry(2.6, 2.63, 72);
-    const ringMat = new THREE.MeshBasicMaterial({ color: 0x2997ff, opacity: 0.35, transparent: true, side: THREE.DoubleSide });
+    const ringGeo = new THREE.RingGeometry(2.55, 2.58, 72);
+    const ringMat = new THREE.MeshBasicMaterial({ color: 0x2997ff, opacity: 0.34, transparent: true, side: THREE.DoubleSide });
     const ring = new THREE.Mesh(ringGeo, ringMat);
     ring.rotation.x = -Math.PI / 2;
-    ring.position.y = 0.004;
+    ring.position.y = 0.003;
     scene.add(ring);
 
+    const outerRingGeo = new THREE.RingGeometry(2.96, 2.98, 72);
+    const outerRingMat = new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.1, transparent: true, side: THREE.DoubleSide });
+    const outerRing = new THREE.Mesh(outerRingGeo, outerRingMat);
+    outerRing.rotation.x = -Math.PI / 2;
+    outerRing.position.y = 0.002;
+    scene.add(outerRing);
+
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath(`${base}/examples/jsm/libs/draco/gltf/`);
+
     const loader = new GLTFLoader();
+    loader.setDRACOLoader(dracoLoader);
+
     await new Promise((resolve, reject) => {
       loader.load(
         modelUrl,
@@ -679,11 +708,11 @@
             }
           );
 
-          // Normalize scale & place neatly on floor y = 0
+          // Normalize scale & place cleanly on floor y = 0
           const box = new THREE.Box3().setFromObject(model);
           const size = box.getSize(new THREE.Vector3());
           const maxDim = Math.max(size.x, size.y, size.z) || 1;
-          const scale = 3.8 / maxDim;
+          const scale = 4.1 / maxDim;
           model.scale.setScalar(scale);
 
           const scaledBox = new THREE.Box3().setFromObject(model);
@@ -693,7 +722,7 @@
           model.position.y -= scaledBox.min.y;
 
           scene.add(model);
-          controls.target.set(0, (scaledBox.max.y - scaledBox.min.y) * 0.42, 0);
+          controls.target.set(0, (scaledBox.max.y - scaledBox.min.y) * 0.44, 0);
           controls.update();
           resolve(undefined);
         },
@@ -708,7 +737,9 @@
       const rect = mountEl.getBoundingClientRect();
       const w = Math.max(1, rect.width);
       const h = Math.max(1, rect.height);
-      camera.aspect = w / h;
+      const aspect = w / h;
+      camera.aspect = aspect;
+      camera.fov = aspect < 1.45 ? 44 : 34;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h, false);
     };
@@ -716,10 +747,23 @@
     window.addEventListener("resize", resize);
     resize();
 
+    /** @type {any} */
+    let targetCamPos = null;
+    controls.addEventListener("start", () => {
+      targetCamPos = null;
+    });
+
     let disposed = false;
     let rafId = 0;
     const animate = () => {
       if (disposed) return;
+      if (targetCamPos) {
+        camera.position.lerp(targetCamPos, 0.12);
+        if (camera.position.distanceTo(targetCamPos) < 0.02) {
+          camera.position.copy(targetCamPos);
+          targetCamPos = null;
+        }
+      }
       controls.update();
       renderer.render(scene, camera);
       rafId = window.requestAnimationFrame(animate);
@@ -728,32 +772,31 @@
 
     /** @type {Record<string, [number, number, number]>} */
     const threePresets = {
-      hero: [3.8, 1.7, 4.4],
-      front: [0.0, 1.35, 5.4],
-      side: [5.4, 1.35, 0.0],
-      rear: [0.0, 1.45, -5.4],
-      top: [0.1, 6.2, 1.2],
+      hero: [3.5, 1.55, 4.15],
+      front: [0.0, 1.25, 5.2],
+      side: [5.3, 1.25, 0.0],
+      rear: [0.0, 1.38, -5.2],
+      top: [0.05, 6.0, 1.15],
     };
 
     return {
       /** @param {string} name */
       setPreset(name) {
         const pos = threePresets[name] || threePresets.hero;
-        camera.position.set(pos[0], pos[1], pos[2]);
-        controls.update();
+        targetCamPos = new THREE.Vector3(pos[0], pos[1], pos[2]);
       },
       /** @param {boolean} enabled */
       setAutoRotate(enabled) {
         controls.autoRotate = enabled;
       },
       reset() {
-        camera.position.set(3.8, 1.7, 4.4);
-        controls.update();
+        targetCamPos = new THREE.Vector3(3.5, 1.55, 4.15);
       },
       dispose() {
         disposed = true;
         if (rafId) window.cancelAnimationFrame(rafId);
         window.removeEventListener("resize", resize);
+        dracoLoader.dispose();
         controls.dispose();
         pmrem.dispose();
         renderer.dispose();
@@ -919,7 +962,7 @@
 
   if (configuredModel) {
     if (uploadWrap instanceof HTMLElement) uploadWrap.hidden = true;
-    void mountGlb(configuredModel, "Інтерактивний 3D-огляд", false);
+    void mountGlb(configuredModel, "3D-огляд · Škoda Octavia A5 GreenLine", false);
   } else {
     mountDemo();
   }
