@@ -8,6 +8,14 @@
     <title>Олександр — практика водіння у Києві</title>
     <link rel="icon" type="image/svg+xml" href="./assets/mark.svg">
     <link rel="stylesheet" href="./styles.css">
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+      }
+    </script>
     <script defer src="./config.js"></script>
     <script defer src="./app.js"></script>
     <script defer src="./car-viewer.js"></script>
@@ -171,7 +179,7 @@
               </div>
             </div>
             <a class="car-teaser-preview" href="./driver.html#car" aria-label="Перейти до 3D-огляду Škoda Octavia A5 GreenLine">
-              <canvas data-car-preview aria-hidden="true"></canvas>
+              <div class="car-teaser-viewport" data-car-preview aria-hidden="true"></div>
               <span class="preview-pill"><span class="preview-dot" aria-hidden="true"></span>Škoda Octavia A5 · 3D</span>
             </a>
           </div>

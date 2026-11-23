@@ -596,8 +596,10 @@
    * @param {HTMLElement} mountEl
    * @param {string} modelUrl
    * @param {(msg: string) => void} setStatus
+   * @param {{ interactive?: boolean }} [options]
    */
-  async function createThreeGlbViewer(mountEl, modelUrl, setStatus) {
+  async function createThreeGlbViewer(mountEl, modelUrl, setStatus, options = {}) {
+    const interactive = options.interactive !== false;
     setStatus("Завантажуємо 3D-модель Škoda Octavia A5…");
 
     const base = "https://cdn.jsdelivr.net/npm/three@0.170.0";
@@ -617,6 +619,9 @@
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.domElement.className = "car-webgl-canvas";
+    if (!interactive) {
+      renderer.domElement.style.pointerEvents = "none";
+    }
 
     mountEl.innerHTML = "";
     mountEl.appendChild(renderer.domElement);
@@ -627,16 +632,21 @@
     scene.environmentIntensity = 0.85;
 
     const camera = new THREE.PerspectiveCamera(34, 16 / 9, 0.05, 100);
-    camera.position.set(3.5, 1.55, 4.15);
+    if (interactive) {
+      camera.position.set(3.5, 1.55, 4.15);
+    } else {
+      camera.position.set(3.25, 1.38, 3.85);
+    }
 
     const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enabled = interactive;
     controls.enableDamping = true;
     controls.dampingFactor = 0.06;
     controls.maxPolarAngle = Math.PI / 2 - 0.03;
     controls.minDistance = 2.4;
     controls.maxDistance = 9.5;
     controls.autoRotate = !prefersReducedMotion;
-    controls.autoRotateSpeed = 0.85;
+    controls.autoRotateSpeed = interactive ? 0.85 : 1.05;
 
     // Studio softbox lighting
     const hemiLight = new THREE.HemisphereLight(0xf2f6ff, 0x26282e, 0.9);
@@ -804,10 +814,28 @@
     };
   }
 
-  // 1. Initialize compact 3D preview teaser on index.html (if present)
-  const previewCanvas = document.querySelector("[data-car-preview]");
-  if (previewCanvas instanceof HTMLCanvasElement) {
-    createCanvasDemoViewer(previewCanvas, { interactive: false, initialPreset: "hero" });
+  const configuredModel =
+    typeof contactSettings === "object" && contactSettings && typeof contactSettings.carModel === "string"
+      ? contactSettings.carModel.trim()
+      : "";
+
+  // 1. Initialize compact 3D preview teaser on index.html (uses real car.glb when configured)
+  const previewMount = document.querySelector("[data-car-preview]");
+  if (previewMount instanceof HTMLElement) {
+    const mountPreviewFallback = () => {
+      previewMount.innerHTML = "";
+      const canvas = document.createElement("canvas");
+      canvas.className = "car-demo-canvas";
+      canvas.setAttribute("aria-hidden", "true");
+      previewMount.appendChild(canvas);
+      createCanvasDemoViewer(canvas, { interactive: false, initialPreset: "hero" });
+    };
+
+    if (configuredModel) {
+      createThreeGlbViewer(previewMount, configuredModel, () => {}, { interactive: false }).catch(mountPreviewFallback);
+    } else {
+      mountPreviewFallback();
+    }
   }
 
   // 2. Initialize full 3D showroom stage on car.html (if present)
@@ -955,11 +983,6 @@
   });
 
   // Boot: use configured carModel if present, otherwise built-in interactive 3D studio car
-  const configuredModel =
-    typeof contactSettings === "object" && contactSettings && typeof contactSettings.carModel === "string"
-      ? contactSettings.carModel.trim()
-      : "";
-
   if (configuredModel) {
     if (uploadWrap instanceof HTMLElement) uploadWrap.hidden = true;
     void mountGlb(configuredModel, "3D-огляд · Škoda Octavia A5 GreenLine", false);
